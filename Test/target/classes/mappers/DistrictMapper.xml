@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.DistrictMapper">
+	<!--
+    /**
+         *
+         * @param parent
+         * @return
+         */
+        List<DistrictEntity> findByParent(String parent); -->
+	<select id="findByParent" resultType="com.test.entity.DistrictEntity">
+	SELECT * FROM t_dict_district WHERE parent=#{parent}
+	</select>
+	<!--
+	/**
+	 *
+	 * @param code
+	 * @return
+	 */
+	DistrictEntity findByCode(String code); -->
+	<select id="findByCode" resultType="com.test.entity.DistrictEntity">
+	SELECT  *  FROM t_dict_district WHERE code=#{code};
+	</select>
+
+	<!--
+	 /**
+     *
+     * @param name
+     * @return code
+     */
+    String getCodeByName(String name);
+	-->
+	<select id="getCodeByName">
+		select code from t_dict_district where name=#{name}
+	</select>
+
+	<!--
+	 /**
+     *
+     * @param code
+     * @return
+     */
+    String getByCode(String code);
+	-->
+	<select id="getByCode">
+		select name from t_dict_district where code=#{code}
+	</select>
+</mapper>

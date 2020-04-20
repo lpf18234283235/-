@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="rcgxpt_test@49.233.182.100" uuid="6685c052-0e22-4e78-be28-2fda47fc9aeb">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://49.233.182.100:33060/rcgxpt_test</jdbc-url>
+    </data-source>
+  </component>
+</project>

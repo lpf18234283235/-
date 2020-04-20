@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:当前XML对应接口文件是哪个 ，此文件和application.properties配置文件中的路徑對應 -->
+<mapper namespace="com.test.mapper.MainJobMapper">
+	<resultMap type="com.test.entity.MainJobEntity" id="MainJobEntity">
+		<id column="id" property="id" />
+		<result column="job_name" property="jobName" />
+		<result column="job_id" property="jobId" />
+		<result column="main_id" property="mainId" />
+	</resultMap>
+	<!--  JobMainEntity findJobByName(Integer jobId);-->
+	<select id="findJobByName" resultMap="MainJobEntity">
+		select 
+				*
+		from 
+				pt_job_main 
+		where 
+				job_name=#{jobName}
+	</select>
+</mapper>

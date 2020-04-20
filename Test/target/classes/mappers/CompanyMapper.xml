@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.CompanyMapper">
+	<resultMap type="com.test.entity.CompanyEntity" id="CompanyEntity">
+		<id column="user_id" property="userId" />
+		<result column="team_name" property="teamName" />
+		<result column="name" property="name" />
+		<result column="sex" property="sex" />
+		<result column="phone" property="phone" />
+		<result column="email" property="email" />
+		<result column="user_image" property="userImage" />
+		<result column="address" property="address" />
+		<result column="introduce" property="introduce" />
+		<result column="license" property="license" />
+		<result column="address_code" property="addressCode" />
+	</resultMap>
+	<!--  /**
+	 * @param id
+	 * @return
+	 */-->
+	<select id="findById" resultMap="CompanyEntity">
+		select user_id, team_name, name, sex, phone, email, user_image, address, introduce, license
+		from pt_user_company where user_id=#{userId}
+	</select>
+
+	<!--
+	/**
+	 *
+	 *
+	 * */
+	List<CompanyEntity> findCompanyByIds(Integer[] userIds);
+	 -->
+	<select id="findCompanyByIds" resultMap="CompanyEntity">
+		select
+		user_id, team_name, name, sex, phone,
+		email, user_image, address,
+		introduce, license
+		from
+		pt_user_company
+		where
+		user_id in(
+		<foreach collection="list" item="userId" separator=",">
+			#{userId}
+		</foreach>
+		)
+	</select>
+
+	<!--
+    /**
+    *
+    * @param companyEntity
+    * @return
+    */
+   Integer insert(CompanyEntity companyEntity); -->
+
+	<insert id="addCompany">
+	INSERT INTO pt_user_company (
+	user_id,team_name,name,sex,phone,email,user_image,address,introduce,license,address_code)
+	VALUES(#{userId},
+	#{teamName},#{name},#{sex},#{phone},#{email},#{userImage},#{address},#{introduce},#{license},#{addressCode}
+	)
+	</insert>
+
+	<!--
+	/**
+	 * 修改公司信息
+	 * @param companyEntity 公司实体对象
+	 * @return 是否成功
+	 */
+	Integer updateCompany(CompanyEntity companyEntity);
+-->
+	<insert id="updateCompany">
+	INSERT INTO copy_user_company (
+	user_id,team_name,name,sex,phone,email,user_image,address,introduce,license,address_code)
+	VALUES(#{userId},
+	#{teamName},#{name},#{sex},#{phone},#{email},#{userImage},#{address},#{introduce},#{license},#{addressCode}
+	)
+	</insert>
+</mapper>

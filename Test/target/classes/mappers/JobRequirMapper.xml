@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.JobRequirMapper">
+	<resultMap type="com.test.entity.JobRequirEntity" id="JobRequirEntity">
+		<id column="requir_id" property="requirId" />
+		<result column="user_id" property="userId" />
+		<result column="requir_name" property="requirName" />
+		<result column="requir_desc" property="requirDesc" />
+		<result column="begin_date" property="beginDate" />
+		<result column="end_date" property="endDate" />
+		<result column="work_address" property="workAddress" />
+		<result column="requir_person" property="requirPerson" />
+		<result column="salary" property="salary" />
+		<result column="link_phone" property="linkPhone" />
+		<result column="task_status" property="taskStatus" />
+		<result column="create_by" property="createBy" />
+		<result column="create_time" property="createTime" />
+		<result column="audit_by" property="auditBy" />
+		<result column="audit_time" property="auditTime" />
+		<result column="audit_remark" property="auditRemark" />
+		<result column="address_code" property="addressCode" />
+	</resultMap>
+	<!-- /**
+         *
+         * @param address
+         * @return
+         */
+        List<JobRequirEntity> findJobByCode(String code);-->
+	<select id="findJobByCode" resultMap="JobRequirEntity">
+		select * from pt_job_requir where address_code=#{code} and task_status="1" order by create_time desc limit 0,10
+	</select>
+	<!--
+	 /**
+     *
+     * @param jobRequirEntity
+     * @return
+     */
+    Integer addJobRequir(JobRequirEntity jobRequirEntity);-->
+	<insert id="addJobRequir">
+		insert into pt_job_requir (
+		user_id,requir_name,requir_desc,
+		begin_date,end_date,work_address,
+		requir_person,salary,link_phone,
+		task_status,create_by,create_time,
+		audit_by,audit_time,audit_remark,address_code
+		)values (
+		#{userId},#{requirName},#{requirDesc},
+		#{beginDate},#{endDate},#{workAddress},
+		#{requirPerson},#{salary},#{linkPhone},
+		#{taskStatus},#{createBy},#{createTime},
+		#{auditBy},#{auditTime},#{auditRemark},#{addressCode}
+		)
+
+	</insert>
+	<!--
+	 /**
+     *
+     * @param userId
+     * @return
+     */
+    List<JobRequirEntity> findListByuserId(Integer userId);
+	-->
+	<select id="findListByuserId" resultMap="JobRequirEntity">
+		select * from pt_job_requir where user_id=#{userId}
+	</select>
+</mapper>

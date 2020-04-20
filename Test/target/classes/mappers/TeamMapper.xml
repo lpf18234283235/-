@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.TeamMapper">
+	<resultMap type="com.test.entity.TeamEntity" id="teamEntity">
+		<id column="user_id" property="userId" />
+		<result column="team_name" property="teamName" />
+		<result column="name" property="name" />
+		<result column="sex" property="sex" />
+		<result column="phone" property="phone" />
+		<result column="email" property="email" />
+		<result column="user_image" property="userImage" />
+		<result column="team_number" property="teamNumber" />
+		<result column="type" property="type" />
+		<result column="address" property="address" />
+		<result column="introduce" property="introduce" />
+		<result column="address_code" property="addressCode" />
+	</resultMap>
+	<!--  /**
+	 * @param id
+	 * @return
+	 */-->
+	<select id="selectById" resultMap="teamEntity">
+		select *
+		from pt_user_team where user_id=#{userId}
+	</select>
+
+	<!--
+	/**
+     *
+     *team_name
+     * @param ptUserTeam
+     * @return
+     */
+    public integer addTeam(TeamEntity TeamEntity);
+-->
+	<insert id="addTeam">
+insert  into
+	pt_user_team (
+	user_id,team_name,
+	name,sex,phone,email,
+	user_image,team_number,type,address,introduce,address_code)
+values (#{userId},#{teamName},
+	#{name},#{sex},#{phone},#{email},
+	#{userImage},#{teamNumber},#{type},#{address},#{introduce},#{addressCode})
+	</insert>
+	<!--
+	 /**
+     * 修改入驻自由人信息
+     * @param teamEntity
+     * @return
+     */
+    Integer updateTeam(TeamEntity teamEntity);-->
+	<insert id="updateTeam">
+		insert  into
+	copy_user_team (
+	user_id,team_name,
+	name,sex,phone,email,
+	user_image,team_number,type,address,introduce,address_code)
+values (#{userId},#{teamName},
+	#{name},#{sex},#{phone},#{email},
+	#{userImage},#{teamNumber},#{type},#{address},#{introduce},#{addressCode})
+	</insert>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.OrderMapper">
+	<resultMap type="com.test.entity.OrderEntity" id="OrderEntity">
+		<id column="order_id" property="order_id" />
+		<result column="requir_id" property="requirId" />
+		<result column="user_id_a" property="userIdA" />
+		<result column="user_id_b" property="userIdB" />
+		<result column="margin_money" property="marginMoney" />
+		<result column="settle_money" property="settleMoney" />
+		<result column="order_status" property="orderStatus" />
+		<result column="create_by" property="createBy" />
+		<result column="create_time" property="createTime" />
+		<result column="remark" property="remark" />
+		<result column="invoice_tag" property="invoiceTag" />
+		<result column="invoice_by" property="invoiceBy" />
+		<result column="invoice_time" property="invoiceTime" />
+		<result column="invoice_info" property="invoiceInfo" />
+	</resultMap>
+	<!--
+	/**
+     *
+     * @param orderEntity
+     * @return
+     */
+     Integer addOrder(OrderEntity orderEntity);
+	-->
+	<insert id="addOrder">
+	insert into  pt_job_order values (requir_id,user_id_a,user_id_b,margin_money,settle_money,order_status,create_by
+	,create_time,remark,invoice_tag,invoice_by,invoice_time,invoice_info)
+	values (#{requirId},#{userIdA},#{userIdB},#{marginMoney},#{settleMoney},#{orderStatus},#{createBy}
+	,#{createTime},#{remark},#{invoiceTag},#{invoiceBy},#{invoiceTime},#{invoiceInfo}
+	)
+</insert>
+	<!--
+	 /**
+     *
+     * @param userId
+     * @return
+     */
+     List<OrderEntity> companyGetListByUserId(Integer userId);-->
+	<select id="companyGetListByUserId">
+		select * from pt_job_order where user_id_a=#{userId} order by create_time desc;
+	</select>
+
+	<!--
+	/**
+     *
+     * @param userId
+     * @return
+     */
+     List<OrderEntity> FOTGetListByUserId(Integer userId);-->
+	<select id="FOTGetListByUserId">
+		select * from pt_job_order where user_id_b=#{userId} order by create_time desc;
+	</select>
+</mapper>

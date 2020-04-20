@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.PostMapper">
+		<resultMap type="com.test.entity.PostEntity" id="PostEntity">
+			<id column="post_id" property="postId" />
+			<result column="post_name" property="postName" />
+		</resultMap>
+	<!--
+	  /**
+     * 查看所有岗位
+     * @return 岗位信息
+     */
+    List<PostEntity> postList();-->
+	<select id="postList" resultMap="PostEntity">
+		select * from pt_post;
+	</select>
+</mapper>

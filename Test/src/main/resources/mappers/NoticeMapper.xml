@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.NoticeMapper">
+	<resultMap type="com.test.entity.NoticeEntity" id="NoticeEntity">
+		<id column="notice_id" property="noticeId" />
+		<result column="invite_id" property="inviteId" />
+		<result column="be_invited_id" property="beInvitedId" />
+		<result column="notice_type" property="noticeType" />
+		<result column="notice_info" property="noticeInfo" />
+		<result column="insert_time" property="insertTime" />
+		<result column="read_status" property="readStatus" />
+		<result column="read_time" property="readTime" />
+	</resultMap>
+	<!--/**
+	*
+	* @param userId
+	* @return
+	*/
+	List<NoticeEntity> findById(Integer userId);-->
+	<select id="findById" resultMap="NoticeEntity">
+		select * from pt_notice where be_invited_id=#{userId}
+	</select>
+
+	<!--
+	/**
+	 *
+	 * @param userId
+	 * @return
+	 */
+	Integer updataById(Integer noticeId,String status,Date date);-->
+	<update id="updataById">
+		update pt_notice set read_status=#{status},read_time=#{date} where notice_id=#{noticeId}
+
+	</update>
+
+	<!--
+	/**
+    *
+    * @param noticeEntity
+    * @return
+    */
+	Integer addNotice(NoticeEntity noticeEntity);-->
+	<insert id="addNotice">
+		insert into pt_notice (invite_id,be_invited_id,notice_type,notice_info,insert_time)values(
+		#{inviteId},#{beInvitedId},#{noticeType},#{noticeInfo},#{insertTime}
+		)
+	</insert>
+</mapper>

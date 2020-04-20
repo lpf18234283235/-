@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.MainMapper">
+
+	<resultMap type="com.test.entity.MainEntity" id="mainEntity">
+		<result property="mainId" column="main_id" />
+		<result property="userName" column="user_name" />
+		<result property="phone" column="phone" />
+		<result property="openId" column="open_id" />
+		<result property="userImage"    column="user_image" />
+		<result property="userType" column="user_type" />
+		<result property="userAddress" column="user_address" />
+		<result property="userStatus" column="user_status" />
+		<result property="inTime" column="in_time" />
+		<result property="auditBy" column="audit_by" />
+		<result property="auditTime" column="audit_time" />
+		<result property="auditRemark" column="audit_remark" />
+	</resultMap>
+	<!-- /** * * * @param ptUserMain * @return
+		*/ public List<MainEntity> selectList(); -->
+	<select id="selectList" resultMap="mainEntity">
+		select main_id, user_name, user_password, user_image, user_type,user_address,
+		user_status,DATE_FORMAT(in_time,"%Y%m%d%H%i%s") 'audit_by, DATE_FORMAT(audit_time,"%Y%m%d%H%i%s") 'audit_remark from
+		pt_user_main
+	</select>
+
+	<!-- /**
+     *
+     *
+     * @param userId
+     * @return
+     */
+    public MainEntity selectById(Long userId); -->
+	<select id="selectById" resultMap="mainEntity">
+    select * where main_id=#{mainId}
+    </select>
+
+
+
+	<!-- /** * * * @param userId * @return */ public
+		int deleteById(Long userId); -->
+	<delete id="deletePtUserMainById" parameterType="Long">
+		delete from pt_user_main where main_id = #{mainId}
+	</delete>
+	<!-- /** * * * @param userIds * @return */ public
+		int deleteByIds(Long[] userIds); -->
+	<delete id="deletePtUserMainByIds" parameterType="String">
+		delete from pt_user_main where user_id in
+		<foreach item="userId" collection="array" open="("
+				 separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+	<!--  /**
+     *
+     * @param ptUserMain
+     * @return
+     */
+    public int insertMain(MainEntity mainEntity); -->
+	<insert id="insertMain" useGeneratedKeys="true" >
+	insert into
+	    pt_user_main(user_name,phone,open_id
+	         )
+		values (
+		    #{userName},#{phone},#{openId}
+		  )
+	</insert>
+
+
+
+	<!--<insert id="replaceMain">
+		insert into pt_user_main(
+		user_image,user_type,user_address,user_status,in_time,audit_by,audit_time,audit_remark
+		)values(
+		#{userImage},#{userType},#{userAddress},#{userStatus},#{inTime},#{auditBy},#{auditTime},#{auditRemark}
+		) where main_id=#{mainId}
+-->
+
+	<update id="replaceMain">
+		update pt_user_main set
+		user_image=#{userImage},user_type=#{userType},
+		user_address=#{userAddress},user_status=#{userStatus},
+		in_time=#{inTime},audit_by=#{auditBy},audit_time=#{auditTime},audit_remark=#{auditRemark}
+		where main_id=#{mainId}
+
+
+	</update>
+	<!--
+    /**
+         *
+         * @param openId
+         * @return
+         */
+        public int getIdByOpenId(String openId);
+     -->
+
+	<select id="getIdByOpenId" resultType="java.lang.Integer">
+ SELECT
+ 	main_id
+ FROM
+ 	pt_user_main
+ WHERE
+ 	open_id=#{openId}
+ </select>
+
+	<!--
+	 /**
+     *
+     * @param openId
+     * @return
+     */
+   String getUsernameByOpenId(String openId);-->
+	<select id="getUsernameByOpenId" >
+		select user_name from pt_user_main where open_id=#{openId}
+	</select>
+
+	<!--
+	/**
+     *
+     * @param openId
+     * @return
+     */
+    String  getStatusByOpenId(String openId);-->
+	<select id="getStatusByOpenId" resultType="java.lang.String">
+		select user_status from pt_user_main where open_id=#{openId}
+	</select>
+
+	<select id="getTypeByOpenId" resultType="java.lang.String">
+ SELECT
+ 	user_type
+ FROM
+ 	pt_user_main
+ WHERE
+ 	open_id=#{openId}
+ </select>
+
+
+	<!--
+	   /**
+     *
+     * @param openId
+     * @return
+     */
+    MainEntity getMainByOpenId(String openId);-->
+	<select id="getMainByOpenId" resultMap="mainEntity">
+		select m.* ,DATE_FORMAT(m.in_time,"%Y%m%d%H%i%s") 'from pt_user_main m where open_id=#{openId}
+	</select>
+	<!--/**
+     *
+     * @param mainId
+     * @return
+     */
+    Integer updateStataus(Integer mainId);-->
+	<update id="updateStataus">
+		update pt_user_main set user_status=1 where main_id=#{mainId}
+	</update>
+</mapper>

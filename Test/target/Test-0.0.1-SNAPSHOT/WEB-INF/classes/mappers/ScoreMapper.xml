@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.ScoreMapper">
+	<resultMap type="com.test.entity.ScoreEntity" id="ScoreEntity">
+		<id column="user_id" property="userId" />
+		<result column="score_value" property="scoreValue" />
+		<result column="update_by" property="updateBy" />
+		<result column="update_date" property="updateDate" />
+	</resultMap>
+	<!--
+	 /**
+     *
+     * @param scoreValue
+     * @return
+     */
+    Integer changeValue(Integer scoreValue,Integer userId);
+	-->
+	<update id="changeValue">
+	update  pt_user_score set score_value=#{scoreValue} where user_id=#{userId}
+</update>
+</mapper>

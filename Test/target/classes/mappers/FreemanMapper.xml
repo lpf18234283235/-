@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.FreemanMapper">
+
+	<resultMap type="com.test.entity.FreemanEntity" id="freemanEntity">
+		<result property="userId"    column="user_id"    />
+		<result property="name"    column="name"    />
+		<result property="sex"    column="sex"    />
+		<result property="phone"    column="phone"    />
+		<result property="email"    column="email"    />
+		<result property="education"    column="education"    />
+		<result property="salaryExpectation"    column="salary_expectation"    />
+		<result property="userImage"    column="user_image"    />
+		<result property="birthday"    column="birthday"    />
+		<result property="workingLife"    column="working_life"    />
+		<result property="address"    column="address"    />
+		<result property="educationExperience"    column="education_experience"    />
+		<result property="workExperience"    column="work_experience"    />
+		<result property="personalIntroduction"    column="personal_introduction"    />
+		<result property="addressCode"    column="address_code"    />
+	</resultMap>
+	<!--  /**
+      * @return
+      */
+     List<FreemanEntity> findAllFreeman();-->
+	<select id="findAllFreeman" resultMap="freemanEntity">
+
+	select user_id, name, sex,
+		phone, email, education, salary_expectation,
+		user_image, birthday, working_life, address,
+		education_experience, work_experience, personal_introduction,address_code
+	from
+	    pt_user_freeman
+	</select>
+
+
+	<!--  /**
+	 * @param id
+	 * @return
+	 */
+	FreemanEntity findById(Integer id);-->
+
+	<select id="findById" resultMap="freemanEntity">
+	select
+		*
+	from
+	    pt_user_freeman where  user_id=#{userId}
+	</select>
+
+	<!--
+	 * @param id
+	 * @return
+	 */
+	Integer removeByid(Integer id);-->
+
+	<delete id="removeByid">
+	delete from pt_user_freeman where user_id=#{userId}
+	</delete>
+	<!-- /*
+	 *
+	 * */
+	Integer addFreeman(FreemanEntity freemanEntity);
+	 -->
+	<insert id="addFreeman">
+	 INSERT INTO pt_user_freeman (
+	         user_id,name,sex, phone,email,
+	          education, salary_expectation,user_image ,
+	          birthday,working_life,address,
+	          education_experience,work_experience,
+	          personal_introduction,address_code)
+	 VALUES (
+	         #{userId},#{name},#{sex},#{phone},#{email},
+	         #{education},#{salaryExpectation},#{userImage},
+	          #{birthday},#{workingLife},#{address},
+	          #{educationExperience},#{workExperience},
+	          #{personalIntroduction},#{addressCode}
+	 )
+
+
+	 </insert>
+	<!--
+	/**
+	 *
+	 * @param freemanEntity
+	 * @return
+	 */
+	List<FreemanEntity> queryByName(FreemanEntity freemanEntity);
+	-->
+	<select id="queryByName">
+		select name,sex,phone,email,education,salary_expectation,user_image
+		,birthday,working_life,address,education_experience,work_experience,personal_introduction
+		from pt_user_freeman
+		<where>
+			<if test="name!=null and name!=''">
+				and name like concat('%',#{name},'%')
+			</if>
+			<if test="phone!=null and phone!=''">
+				and phone like concat('%',#{phone},'%')
+			</if>
+			<if test="education!=null and education!=''">
+				and education = #{education}
+			</if>
+		</where>
+
+	</select>
+
+	<!--
+	/**
+	 * @param id
+	 * @return
+	 */
+	Integer updateInfo(FreemanEntity freeman);-->
+	<insert id="updateInfo">
+		 INSERT INTO copy_user_freeman (
+	         user_id,name,sex, phone,email,
+	          education, salary_expectation,user_image ,
+	          birthday,working_life,address,
+	          education_experience,work_experience,
+	          personal_introduction,address_code)
+	 VALUES (
+	         #{userId},#{name},#{sex},#{phone},#{email},
+	         #{education},#{salaryExpectation},#{userImage},
+	          #{birthday},#{workingLife},#{address},
+	          #{educationExperience},#{workExperience},
+	          #{personalIntroduction},#{addressCode}
+	 )
+	</insert>
+</mapper>
