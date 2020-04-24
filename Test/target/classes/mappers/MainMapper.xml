@@ -145,7 +145,7 @@
      */
     MainEntity getMainByOpenId(String openId);-->
 	<select id="getMainByOpenId" resultMap="mainEntity">
-		select m.* ,DATE_FORMAT(m.in_time,"%Y%m%d%H%i%s") 'from pt_user_main m where open_id=#{openId}
+		select m.* ,DATE_FORMAT(m.in_time,"%Y%m%d%H%i%s") from pt_user_main m where open_id=#{openId}
 	</select>
 	<!--/**
      *
@@ -156,4 +156,13 @@
 	<update id="updateStataus">
 		update pt_user_main set user_status=1 where main_id=#{mainId}
 	</update>
+	<!--/**
+     * 通过id查找用户
+     * @param mainId
+     * @return
+     */
+    MainEntity getMainByMainId(Integer mainId);-->
+	<select id="getMainByMainId" resultMap="mainEntity">
+		select  * from  pt_user_main where main_id=#{mainId} and user_status=2;
+	</select>
 </mapper>

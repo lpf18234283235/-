@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.ScoreInfoMapper">
+		<resultMap type="com.test.entity.ScoreInfoEntity" id="ScoreInfoEntity">
+			<id column="id" property="id" />
+			<result column="info" property="info" />
+			<result column="score_value" property="scoreValue" />
+		</resultMap>
+	<!--/**
+     * 获取所有积分说明
+     * @return
+     */
+    List<ScoreInfoEntity> getInfo();-->
+	<select id="getInfo" resultMap="ScoreInfoEntity">
+		select * from pt_score_info;
+	</select>
+
+	<!--
+	  /**
+     * 通过说明id查找积分数值
+     * @param id 说明id
+     * @return 积分数值
+     */
+    Integer getScoreById(Integer id);-->
+	<select id="getScoreById" resultType="java.lang.Integer" >
+		select score_value from pt_score_info where id=#{id}
+	</select>
+</mapper>

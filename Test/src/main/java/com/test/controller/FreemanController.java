@@ -37,20 +37,31 @@ public class FreemanController
     }
 
 
-    @GetMapping("/getFreeman/{userId}")
+    @GetMapping("getFreeman/{userId}")
     @ApiImplicitParam("入驻自由人的userId")
     @ApiOperation(value = "根据id查看入驻自由人详情", notes = "根据id查看入驻自由人详情")
-    public JsonResult<Void> findFreemanById(@PathVariable("userId") Integer userId) {
+    public JsonResult<FreemanEntity> findFreemanById(@PathVariable("userId") Integer userId) {
         FreemanEntity data = this.freemanService.selectById(userId);
         return new JsonResult(SUCCESS, data);
     }
 
 
-    @PostMapping("/changeFreeman")
+    @PostMapping("changeFreeman")
     @ApiImplicitParam("自由人实体对象")
     @ApiOperation(value = "修改自由人的个人信息", notes = "修改自由人的个人信息")
     public JsonResult<Void> updateFreemanById(FreemanEntity freemanEntity,String openId) {
         freemanService.update(freemanEntity,openId);
+        return new JsonResult(SUCCESS);
+    }
+
+    @PostMapping("changeStatus")
+    @ApiImplicitParams({
+            @ApiImplicitParam("openId"),
+            @ApiImplicitParam("状态")
+    })
+    @ApiOperation(value = "修改自由人的个人状态", notes = "修改自由人的个人状态")
+    public JsonResult<Void> updateFreemanById(String openId,Integer userStatus) {
+       freemanService.updateStatus(openId,userStatus);
         return new JsonResult(SUCCESS);
     }
 }

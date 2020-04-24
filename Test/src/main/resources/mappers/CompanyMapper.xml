@@ -15,6 +15,7 @@
 		<result column="introduce" property="introduce" />
 		<result column="license" property="license" />
 		<result column="address_code" property="addressCode" />
+
 	</resultMap>
 	<!--  /**
 	 * @param id

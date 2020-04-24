@@ -39,7 +39,7 @@ public class CompanyController
 	@GetMapping({"/getCompany/{userId}"})
 	@ApiImplicitParam("入驻公司id")
 			@ApiOperation(value = "查看入驻公司详情接口", notes ="查看入驻公司详情接口")
-			public JsonResult<Void> findCompanyById(@PathVariable("userId") Integer userId) {
+			public JsonResult<CompanyEntity> findCompanyById(@PathVariable("userId") Integer userId) {
 		CompanyEntity data = this.companyService.selectById(userId);
 		return new JsonResult(SUCCESS, data);
 	}

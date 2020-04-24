@@ -33,4 +33,27 @@ public interface JobRequirMapper {
      * @return 是否成功
      */
     Integer changeJobRequir(JobRequirEntity jobRequirEntity);
+
+    /**
+     * 查看用工需求详情
+     * @param requirId 需求id
+     * @return
+     */
+    JobRequirEntity getByRequirId(Integer requirId);
+
+    /**
+     * 根据需求状态查找
+     * @param userId 用户的id
+     * @param taskStatus 需求状态
+     * @return 用工需求
+     */
+    List<JobRequirEntity> getListByStatus(Integer userId,Integer taskStatus);
+
+    /**
+     * 修改指定用工需求的状态
+     * @param requirId 需求id
+     * @param taskStatus 状态
+     * @return
+     */
+    Integer updateStatus(Integer requirId,String taskStatus);
 }

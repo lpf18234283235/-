@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:当前XML对应接口文件是哪个 ，此文件和application.properties配置文件中的路徑對應 -->
+<mapper namespace="com.test.mapper.MoneyDetailMapper">
+	<resultMap type="com.test.entity.MoneyDetailEntity" id="MoneyDetailEntity">
+		<id column="money_id" property="moneyId" />
+		<result column="user_id" property="userId" />
+		<result column="money_type" property="moneyType" />
+		<result column="change_value" property="changeValue" />
+		<result column="update_by" property="updateBy" />
+		<result column="update_date" property="updateDate" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<!--
+	 /**
+     * 查看指定用户的钱包变动记录
+     * @param userId 用户id
+     * @return
+     */
+    List<MoneyDetailEntity> getListByUserId(Integer userId);-->
+	<select id="getListByUserId" resultMap="MoneyDetailEntity">
+		select * from pt_user_money_detail where user_id=#{userId}
+	</select>
+	<!--
+	 /**查看不同类型的钱包变动记录
+     * @param userId
+     * @param moneyType 变动类型
+     * @return
+     */
+    List<MoneyDetailEntity> listByType(Integer userId,String moneyType);
+	-->
+	<select id="listByType" resultMap="MoneyDetailEntity">
+		select * from pt_user_money_detail where user_id=#{userId} and money_type=#{moneyType};
+	</select>
+	<!--
+	 /**
+     * 创建钱包变动记录
+     * @param moneyDetailEntity
+     * @return
+     */
+    Integer add(MoneyDetailEntity moneyDetailEntity);
+	-->
+	<insert id="add">
+		insert into pt_user_money_detail (user_id, money_type, change_value,type,update_by, update_date, remark)
+		values (#{userId}, #{moneyType}, #{changeValue},#{type}, #{updateBy}, #{updateDate}, #{remark})
+	</insert>
+</mapper>

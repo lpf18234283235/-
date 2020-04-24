@@ -25,21 +25,26 @@ public class JobRequirEntity
     private Integer userId;
     private String requirName;
     private String requirDesc;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date beginDate;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private String beginDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private String endDate;
     private String workAddress;
     private Integer requirPerson;
     private Integer salary;
     private String linkPhone;
     private String taskStatus;
     private Integer createBy;
-    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private String createTime;
     private String auditBy;
     private Date auditTime;
     private String auditRemark;
     private String addressCode;
+    private String education;
+    private String experience;
+    private Integer postId;
+    private Integer type;
 
     public String getAddressCode() { return this.addressCode; }
 
@@ -89,19 +94,19 @@ public class JobRequirEntity
     }
 
 
-    public Date getBeginDate() { return this.beginDate; }
+    public String getBeginDate() { return this.beginDate; }
 
 
-    public JobRequirEntity setBeginDate(Date beginDate) {
+    public JobRequirEntity setBeginDate(String beginDate) {
         this.beginDate = beginDate;
         return this;
     }
 
 
-    public Date getEndDate() { return this.endDate; }
+    public String getEndDate() { return this.endDate; }
 
 
-    public JobRequirEntity setEndDate(Date endDate) {
+    public JobRequirEntity setEndDate(String endDate) {
         this.endDate = endDate;
         return this;
     }
@@ -161,10 +166,10 @@ public class JobRequirEntity
     }
 
 
-    public Date getCreateTime() { return this.createTime; }
+    public String getCreateTime() { return this.createTime; }
 
 
-    public JobRequirEntity setCreateTime(Date createTime) {
+    public JobRequirEntity setCreateTime(String createTime) {
         this.createTime = createTime;
         return this;
     }
@@ -197,7 +202,66 @@ public class JobRequirEntity
     }
 
 
+    public String getEducation() {
+        return education;
+    }
 
+    public JobRequirEntity setEducation(String education) {
+        this.education = education;
+        return this;
+    }
 
-    public String toString() { return "JobRequirEntity{requirId=" + this.requirId + ", userId=" + this.userId + ", requirName='" + this.requirName + '\'' + ", requirDesc='" + this.requirDesc + '\'' + ", beginDate=" + this.beginDate + ", endDate=" + this.endDate + ", workAddress='" + this.workAddress + '\'' + ", requirPerson=" + this.requirPerson + ", salary=" + this.salary + ", linkPhone='" + this.linkPhone + '\'' + ", taskStatus='" + this.taskStatus + '\'' + ", createBy=" + this.createBy + ", createTime=" + this.createTime + ", auditBy='" + this.auditBy + '\'' + ", auditTime=" + this.auditTime + ", auditRemark='" + this.auditRemark + '\'' + ", addressCode='" + this.addressCode + '\'' + '}'; }
+    public String getExperience() {
+        return experience;
+    }
+
+    public JobRequirEntity setExperience(String experience) {
+        this.experience = experience;
+        return this;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public JobRequirEntity setPostId(Integer postId) {
+        this.postId = postId;
+        return this;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public JobRequirEntity setType(Integer type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "JobRequirEntity{" +
+                "requirId=" + requirId +
+                ", userId=" + userId +
+                ", requirName='" + requirName + '\'' +
+                ", requirDesc='" + requirDesc + '\'' +
+                ", beginDate=" + beginDate +
+                ", endDate=" + endDate +
+                ", workAddress='" + workAddress + '\'' +
+                ", requirPerson=" + requirPerson +
+                ", salary=" + salary +
+                ", linkPhone='" + linkPhone + '\'' +
+                ", taskStatus='" + taskStatus + '\'' +
+                ", createBy=" + createBy +
+                ", createTime=" + createTime +
+                ", auditBy='" + auditBy + '\'' +
+                ", auditTime=" + auditTime +
+                ", auditRemark='" + auditRemark + '\'' +
+                ", addressCode='" + addressCode + '\'' +
+                ", education='" + education + '\'' +
+                ", experience='" + experience + '\'' +
+                ", postId=" + postId +
+                ", type=" + type +
+                '}';
+    }
 }

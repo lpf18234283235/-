@@ -21,6 +21,10 @@
 		<result column="audit_time" property="auditTime" />
 		<result column="audit_remark" property="auditRemark" />
 		<result column="address_code" property="addressCode" />
+		<result column="education" property="education" />
+		<result column="experience" property="experience" />
+		<result column="post_id" property="postId" />
+		<result column="type" property="type" />
 	</resultMap>
 	<!-- /**
          *
@@ -29,7 +33,7 @@
          */
         List<JobRequirEntity> findJobByCode(String code);-->
 	<select id="findJobByCode" resultMap="JobRequirEntity">
-		select * from pt_job_requir where address_code=#{code} and task_status="1" order by create_time desc limit 0,10
+		select * from pt_job_requir where address_code=#{code} and task_status="2" order by create_time desc limit 0,10
 	</select>
 	<!--
 	 /**
@@ -43,14 +47,16 @@
 		user_id,requir_name,requir_desc,
 		begin_date,end_date,work_address,
 		requir_person,salary,link_phone,
-		task_status,create_by,create_time,
-		audit_by,audit_time,audit_remark,address_code
+		task_status,create_by,
+		audit_by,audit_time,audit_remark,address_code,
+		education,experience,post_id,type
 		)values (
 		#{userId},#{requirName},#{requirDesc},
 		#{beginDate},#{endDate},#{workAddress},
 		#{requirPerson},#{salary},#{linkPhone},
-		#{taskStatus},#{createBy},#{createTime},
-		#{auditBy},#{auditTime},#{auditRemark},#{addressCode}
+		#{taskStatus},#{createBy},
+		#{auditBy},#{auditTime},#{auditRemark},#{addressCode},
+		#{education},#{experience},#{postId},#{type}
 		)
 
 	</insert>
@@ -79,13 +85,48 @@
 		begin_date,end_date,work_address,
 		requir_person,salary,link_phone,
 		task_status,create_by,create_time,
-		audit_by,audit_time,audit_remark,address_code
+		audit_by,audit_time,audit_remark,address_code,
+		education,experience,post_id,type
 		)values (
 		#{userId},#{requirName},#{requirDesc},
 		#{beginDate},#{endDate},#{workAddress},
 		#{requirPerson},#{salary},#{linkPhone},
 		#{taskStatus},#{createBy},#{createTime},
-		#{auditBy},#{auditTime},#{auditRemark},#{addressCode}
+		#{auditBy},#{auditTime},#{auditRemark},#{addressCode},
+		#{education},#{experience},#{postId},#{type}
 		)
 	</insert>
+	<!--
+	 /**
+     * 查看用工需求详情
+     * @param requirId 需求id
+     * @return
+     */
+    JobRequirEntity getByRequirId(Integer requirId);-->
+	<select id="getByRequirId" resultMap="JobRequirEntity">
+		select * from pt_job_requir where requir_id=#{requirId}
+	</select>
+	<!--
+	 /**
+     * 根据需求状态查找
+     * @param userId 用户的id
+     * @param taskStatus 需求状态
+     * @return 用工需求
+     */
+    List<JobRequirEntity> getListByStatus(Integer userId,Integer taskStatus);-->
+	<select id="getListByStatus" resultMap="JobRequirEntity">
+		SELECT * from pt_job_requir where user_id=#{userId} and task_status=#{taskStatus} limit 0,1000;
+	</select>
+
+	<!--
+	 /**
+     * 修改指定用工需求的状态
+     * @param requirId 需求id
+     * @param taskStatus 状态
+     * @return
+     */
+    Integer updateStatus(Integer requirId,String taskStatus);-->
+	<update id="updateStatus">
+		update pt_job_requir set task_status=#{taskStatus} where requir_id=#{requirId}
+	</update>
 </mapper>

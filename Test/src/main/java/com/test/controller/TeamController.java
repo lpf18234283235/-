@@ -30,7 +30,7 @@ public class TeamController extends BaseController {
     @GetMapping("/getTeam/{userId}")
     @ApiImplicitParam("团队的userId")
     @ApiOperation(value = "查看入驻团队详情接口", notes = "查看入驻团队详情接口")
-    public JsonResult<Void> findTeamById(@PathVariable("userId") Integer userId) {
+    public JsonResult<TeamEntity> findTeamById(@PathVariable("userId") Integer userId) {
         TeamEntity data = this.teamService.selectById(userId);
         return new JsonResult(SUCCESS, data);
     }

@@ -34,7 +34,18 @@
      * @return
      */
     Integer countScoreValue(Integer userId);-->
-	<select id="countScoreValue" >
+	<select id="countScoreValue" resultType="java.lang.Integer">
 		select sum(CONCAT(score_type,change_value)) score_value from pt_user_score_detail where user_id=#{userId}
 	</select>
+	<!--
+	/**
+     * 添加积分细节
+     * @param scoreDetailEntity 积分实体对象
+     * @return 是否成功
+     */
+    Integer addScoreDetail(ScoreDetailEntity scoreDetailEntity);-->
+	<insert id="addScoreDetail">
+		insert into pt_user_score_detail (user_id, score_type, change_value, update_by, update_date, remark)
+		values (#{userId}, #{scoreType}, #{changeValue}, #{updateBy}, #{updateDate}, #{remark})
+	</insert>
 </mapper>

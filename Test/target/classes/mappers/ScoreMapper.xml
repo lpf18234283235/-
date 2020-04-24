@@ -17,7 +17,17 @@
      */
     Integer changeValue(Integer scoreValue,Integer userId);
 	-->
-	<update id="changeValue">
+	<update id="changeValue" >
 	update  pt_user_score set score_value=#{scoreValue} where user_id=#{userId}
 </update>
+	<!--
+	 /**
+     * 查看个人用户的积分总额
+     * @param userId
+     * @return
+     */
+     Integer getScoreValue(Integer userId);-->
+	<select id="getScoreValue" resultType="java.lang.Integer">
+		select score_value from pt_user_score where user_id=#{userId};
+	</select>
 </mapper>

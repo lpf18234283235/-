@@ -20,7 +20,19 @@
 		<result property="workExperience"    column="work_experience"    />
 		<result property="personalIntroduction"    column="personal_introduction"    />
 		<result property="addressCode"    column="address_code"    />
+		<result property="postId"    column="post_id"    />
+		<result property="userStatus"    column="user_status"    />
 	</resultMap>
+	<!--
+	/**
+	 * 修改个人状态
+ 	 * @param userId
+	 * @return
+	 */
+	Integer updateStatus(Integer userId,Integer userStatus);-->
+	<update id="updateStatus">
+		update pt_user_freeman set user_status=#{userStatus} where user_id=#{userId};
+	</update>
 	<!--  /**
       * @return
       */
@@ -30,7 +42,7 @@
 	select user_id, name, sex,
 		phone, email, education, salary_expectation,
 		user_image, birthday, working_life, address,
-		education_experience, work_experience, personal_introduction,address_code
+		education_experience, work_experience, personal_introduction,address_code,post_id
 	from
 	    pt_user_freeman
 	</select>
@@ -69,13 +81,13 @@
 	          education, salary_expectation,user_image ,
 	          birthday,working_life,address,
 	          education_experience,work_experience,
-	          personal_introduction,address_code)
+	          personal_introduction,address_code,post_id)
 	 VALUES (
 	         #{userId},#{name},#{sex},#{phone},#{email},
 	         #{education},#{salaryExpectation},#{userImage},
 	          #{birthday},#{workingLife},#{address},
 	          #{educationExperience},#{workExperience},
-	          #{personalIntroduction},#{addressCode}
+	          #{personalIntroduction},#{addressCode},#{postId}
 	 )
 
 
@@ -118,13 +130,13 @@
 	          education, salary_expectation,user_image ,
 	          birthday,working_life,address,
 	          education_experience,work_experience,
-	          personal_introduction,address_code)
+	          personal_introduction,address_code,post_id)
 	 VALUES (
 	         #{userId},#{name},#{sex},#{phone},#{email},
 	         #{education},#{salaryExpectation},#{userImage},
 	          #{birthday},#{workingLife},#{address},
 	          #{educationExperience},#{workExperience},
-	          #{personalIntroduction},#{addressCode}
+	          #{personalIntroduction},#{addressCode},#{postId}
 	 )
 	</insert>
 </mapper>

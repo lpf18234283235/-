@@ -29,9 +29,9 @@ public class JobRequirController extends BaseController {
     private SqlService sqlService;
 
     @GetMapping("findJobByCode")
-    @ApiImplicitParam("job编码")
-    @ApiOperation(value = "通过工作名称查找工作", notes = "通过工作名称查找工作")
-    public JsonResult findJob(Integer code) {
+    @ApiImplicitParam("地址编码")
+    @ApiOperation(value = "通过地址编码查找工作", notes = "通过地址编码查找工作")
+    public JsonResult<List<JobRequirEntity>> findJob(Integer code) {
         List<JobRequirEntity> date = this.jobRequirService.getJobByAddress(code);
         return new JsonResult(SUCCESS, date);
     }
@@ -50,7 +50,7 @@ public class JobRequirController extends BaseController {
     @GetMapping("findListByopenId")
     @ApiImplicitParam("当前登录用户的openId")
     @ApiOperation(value = "查看当前登录用户创建的所有用工需求接口", notes = "查看当前登录用户创建的所有用工需求接口")
-    public JsonResult<Void> findListByOpenId(String openId) {
+    public JsonResult<List<JobRequirEntity>> findListByOpenId(String openId) {
         List<JobRequirEntity> data = this.jobRequirService.getListByOpenId(openId);
         return new JsonResult(SUCCESS, data);
     }
@@ -60,8 +60,36 @@ public class JobRequirController extends BaseController {
     @ApiImplicitParams({@ApiImplicitParam("用工需求实体对象"),
             @ApiImplicitParam("当前登录的用户id")})
     @ApiOperation(value = "修改用工需求接口", notes = "修改用工需求接口")
-    public JsonResult<Void> findListByOpenId(JobRequirEntity jobRequirEntity, String openId) {
+    public JsonResult<Void> updateJobRequir(JobRequirEntity jobRequirEntity, String openId) {
         jobRequirService.changeJobRequir(jobRequirEntity, openId);
+        return new JsonResult(SUCCESS);
+    }
+
+    @GetMapping("getDetail")
+    @ApiImplicitParam("用工需求id")
+    @ApiOperation(value = "查看用工需求详情", notes = "查看用工需求详情")
+    public JsonResult<JobRequirEntity> findByRequirId(Integer requirId) {
+       JobRequirEntity data = jobRequirService.getByRequirId(requirId);
+        return new JsonResult(SUCCESS, data);
+    }
+
+    @GetMapping("byStatus")
+    @ApiImplicitParams({
+            @ApiImplicitParam("当前登录用户的openId"),
+            @ApiImplicitParam("用工需求的状态")
+    })
+    @ApiOperation(value = "查看不同状态的用工需求", notes = "查看不同状态的用工需求")
+    public JsonResult<List<JobRequirEntity>> findByStatus(String openId,Integer taskStatus) {
+       List<JobRequirEntity> data=jobRequirService.getListByStatus(openId,taskStatus);
+        return new JsonResult(SUCCESS, data);
+    }
+
+    @PostMapping("changeStatus")
+    @ApiImplicitParams({@ApiImplicitParam("需求id"),
+            @ApiImplicitParam("状态，0：保存未发布，1：发布请求审核，2：审核通过，3：审核不通过"),@ApiImplicitParam("当前登录的用户openid")})
+    @ApiOperation(value = "修改用工需求状态接口", notes = "修改用工需求状态接口")
+    public JsonResult<Void> updateStatus(Integer requirId,String taskStatus, String openId) {
+        jobRequirService.changeStatus(requirId,taskStatus,openId);
         return new JsonResult(SUCCESS);
     }
 }

@@ -1,4 +1,5 @@
 package com.test.entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.test.entity.ScoreDetailEntity;
 
@@ -8,36 +9,27 @@ import java.util.Date;
 public class ScoreDetailEntity implements Serializable {
     private Integer scoreId;
     private Integer userId;
-    private char scoreType;
+    private String scoreType;
 
-    public Integer getScoreId() { return this.scoreId; }
-    private Integer changeValue; private Integer updateBy;
+    public Integer getScoreId() {
+        return this.scoreId;
+    }
+
+    private Integer changeValue;
+    private Integer updateBy;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateDate;
     private String remark;
+
     public ScoreDetailEntity setScoreId(Integer scoreId) {
         this.scoreId = scoreId;
         return this;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public Integer getUserId() { return this.userId; }
+    public Integer getUserId() {
+        return this.userId;
+    }
 
 
     public ScoreDetailEntity setUserId(Integer userId) {
@@ -46,16 +38,20 @@ public class ScoreDetailEntity implements Serializable {
     }
 
 
-    public char getScoreType() { return this.scoreType; }
+    public String getScoreType() {
+        return this.scoreType;
+    }
 
 
-    public ScoreDetailEntity setScoreType(char scoreType) {
+    public ScoreDetailEntity setScoreType(String scoreType) {
         this.scoreType = scoreType;
         return this;
     }
 
 
-    public Integer getChangeValue() { return this.changeValue; }
+    public Integer getChangeValue() {
+        return this.changeValue;
+    }
 
 
     public ScoreDetailEntity setChangeValue(Integer changeValue) {
@@ -64,7 +60,9 @@ public class ScoreDetailEntity implements Serializable {
     }
 
 
-    public Integer getUpdateBy() { return this.updateBy; }
+    public Integer getUpdateBy() {
+        return this.updateBy;
+    }
 
 
     public ScoreDetailEntity setUpdateBy(Integer updateBy) {
@@ -73,7 +71,9 @@ public class ScoreDetailEntity implements Serializable {
     }
 
 
-    public Date getUpdateDate() { return this.updateDate; }
+    public Date getUpdateDate() {
+        return this.updateDate;
+    }
 
 
     public ScoreDetailEntity setUpdateDate(Date updateDate) {
@@ -82,7 +82,9 @@ public class ScoreDetailEntity implements Serializable {
     }
 
 
-    public String getRemark() { return this.remark; }
+    public String getRemark() {
+        return this.remark;
+    }
 
 
     public ScoreDetailEntity setRemark(String remark) {
@@ -91,9 +93,7 @@ public class ScoreDetailEntity implements Serializable {
     }
 
 
-
-
-
-
-    public String toString() { return "ScoreDetailEntity{scoreId=" + this.scoreId + ", userId=" + this.userId + ", scoreType=" + this.scoreType + ", changeValue=" + this.changeValue + ", updateBy=" + this.updateBy + ", updateDate=" + this.updateDate + ", remark='" + this.remark + '\'' + '}'; }
+    public String toString() {
+        return "ScoreDetailEntity{scoreId=" + this.scoreId + ", userId=" + this.userId + ", scoreType=" + this.scoreType + ", changeValue=" + this.changeValue + ", updateBy=" + this.updateBy + ", updateDate=" + this.updateDate + ", remark='" + this.remark + '\'' + '}';
+    }
 }

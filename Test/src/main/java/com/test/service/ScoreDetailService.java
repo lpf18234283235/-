@@ -7,4 +7,6 @@ public interface ScoreDetailService {
     List<ScoreDetailEntity> findById(String openId);
 
     Integer countScore(String openId);
+
+    void createScoreDetail(ScoreDetailEntity scoreDetailEntity,String openId);
 }

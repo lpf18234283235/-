@@ -16,4 +16,5 @@ public interface FreemanService {
 
     int deleteById(Integer userId);
 
+    void updateStatus(String openId,Integer status);
 }

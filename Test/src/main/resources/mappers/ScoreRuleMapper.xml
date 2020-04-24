@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:-->
+<mapper namespace="com.test.mapper.ScoreRuleMapper">
+		<resultMap type="com.test.entity.ScoreRuleEntity" id="ScoreRuleEntity">
+			<id column="id" property="id" />
+			<result column="money" property="money" />
+			<result column="score_value" property="scoreValue" />
+		</resultMap>
+	<!--
+	  /**
+     * 查看所有积分规则
+     * @return
+     */
+    List<ScoreRuleEntity> getAll();
+	-->
+	<select id="getAll" resultMap="ScoreRuleEntity">
+		select  * from pt_score_rule;
+	</select>
+</mapper>

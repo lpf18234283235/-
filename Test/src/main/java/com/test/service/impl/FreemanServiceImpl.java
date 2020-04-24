@@ -53,8 +53,8 @@ public class FreemanServiceImpl
 		System.err.println(userId);
 		this.freemanMapper.addFreeman(freemanEntity);
 		MainEntity mainEntity = new MainEntity();
-		mainEntity.setMainId(userId);
 		mainEntity.setInTime(new Date());
+		mainEntity.setMainId(userId);
 		mainEntity.setUserImage(freemanEntity.getUserImage());
 		mainEntity.setUserType("3");
 		mainEntity.setUserAddress(freemanEntity.getAddress());
@@ -79,4 +79,11 @@ public class FreemanServiceImpl
 
 
 	public int deleteById(Integer userId) { return this.freemanMapper.removeById(userId).intValue(); }
+
+	@Override
+	public void updateStatus(String openId, Integer userStatus) {
+		Integer userId=mainService.findIdByOpenId(openId);
+		freemanMapper.updateStatus(userId,userStatus);
+
+	}
 }

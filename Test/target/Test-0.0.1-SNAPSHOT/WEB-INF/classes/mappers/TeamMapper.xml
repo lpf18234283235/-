@@ -54,7 +54,7 @@ values (#{userId},#{teamName},
     Integer updateTeam(TeamEntity teamEntity);-->
 	<insert id="updateTeam">
 		insert  into
-	copy_user_team (
+	copy_pt_user_team (
 	user_id,team_name,
 	name,sex,phone,email,
 	user_image,team_number,type,address,introduce,address_code)

@@ -22,6 +22,7 @@ public class SqlDaoImpl implements SqlDao {
     @Override
     public String querySqlByName(String sqlName) {
         List<TSql> result = jdbcTemplate.query("SELECT sqltext FROM t_sql WHERE sqlname = ?",new Object[]{sqlName},new BeanPropertyRowMapper(TSql.class));
+        System.out.println(result);
         if(result.size()>0){
             return result.get(0).getSqlText();
         }else{

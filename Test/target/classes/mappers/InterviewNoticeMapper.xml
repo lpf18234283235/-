@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:当前XML对应接口文件是哪个 ，此文件和application.properties配置文件中的路徑對應 -->
+<mapper namespace="com.test.mapper.InterviewNoticeMapper">
+	<resultMap type="com.test.entity.InterviewNoticeEntity" id="InterviewNoticeEntity">
+		<id column="id" property="id" />
+		<result column="user_id_a" property="userIdA" />
+		<result column="user_a_name" property="userAName" />
+		<result column="phone" property="phone" />
+		<result column="user_id_b" property="userIdB" />
+		<result column="user_b_name" property="userBName" />
+		<result column="job_id" property="jobId" />
+		<result column="interview_time" property="interviewTime" />
+		<result column="interview_address" property="interviewAddress" />
+		<result column="interview_info" property="interviewInfo" />
+		<result column="interview_status" property="interviewStatus" />
+	</resultMap>
+	<!--
+	 /**
+     * 创建面试
+     * @return
+     */
+    Integer addInterview(InterviewNoticeEntity interviewNoticeEntity);-->
+	<insert id="addInterview">
+		insert into pt_interview_notice(user_id_a, user_a_name,phone, user_id_b,
+		 user_b_name, post_name, interview_time,
+		  interview_address, interview_info, interview_status)
+		values(#{userIdA}, #{userAName},#{phone} ,#{userIdB},
+		 #{userBName}, #{postName}, #{interviewTime},
+		  #{interviewAddress}, #{interviewInfo}, #{interviewStatus});
+	</insert>
+
+
+
+	<!--
+	/**
+     * 修改指定面试邀请的状态
+     * @param id
+     * @return
+     */
+    Integer updateStatus(Integer id,Integer interviewStatus);-->
+	<update id="updateStatus">
+		update pt_interview_notice set interview_status=#{interviewStatus} where id=#{id}
+
+	</update>
+	<!--
+	 /**
+     * 甲方的所有面试
+     * @return
+     */
+    List<InterviewNoticeEntity> listByIdA(Integer userIdA);
+	-->
+	<select id="listByIdA" resultMap="InterviewNoticeEntity">
+		select * from pt_interview_notice where user_id_a=#{userIdA};
+	</select>
+
+	<!--
+	/**
+     * 已方的所有面试
+     * @return
+     */
+    List<InterviewNoticeEntity> listByIdB(Integer userIdB);
+	-->
+	<select id="listByIdB" resultMap="InterviewNoticeEntity">
+		select * from pt_interview_notice where user_id_b=#{userIdB};
+	</select>
+
+	<!--
+	/**
+     * 甲方查看指定状态的面试
+     * @return
+     */
+    List<InterviewNoticeEntity> listByStatusUserIdA(Integer userIdA,Integer interviewStatus);
+	-->
+	<select id="listByStatusUserIdA" resultMap="InterviewNoticeEntity">
+		select * from pt_interview_notice where user_id_a=#{userIdA} and interview_status=#{interviewStatus};
+	</select>
+	<!--
+	/**
+     * 乙方查看状态不同的面试
+     * @return
+     */
+    List<InterviewNoticeEntity> listByStatusUserIdB(Integer userIdB,Integer interviewStatus);
+	-->
+	<select id="listByStatusUserIdB" resultMap="InterviewNoticeEntity">
+		select * from pt_interview_notice where user_id_b=#{userIdB} and interview_status=#{interviewStatus};
+	</select>
+
+</mapper>

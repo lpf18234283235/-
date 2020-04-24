@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- namespace:当前XML对应接口文件是哪个 ，此文件和application.properties配置文件中的路徑對應 -->
+<mapper namespace="com.test.mapper.MoneyMapper">
+	<resultMap type="com.test.entity.MoneyEntity" id="MoneyEntity">
+		<id column="user_id" property="userId" />
+		<result column="money" property="money" />
+		<result column="update_by" property="updateBy" />
+		<result column="update_date" property="updateDate" />
+	</resultMap>
+<!-- /**
+     * 查看用户钱包总额
+     * @param userId
+     * @return
+     */
+    Integer moneyValueByUserId(Integer userId);-->
+	<select id="moneyValueByUserId" resultType="java.lang.Integer">
+		select money from pt_user_money where user_id=#{userId}
+	</select>
+	<!--
+
+    /**
+     * 修改钱包总额
+     * @param userId
+     * @param moneyValue
+     * @return
+     */
+    Integer changeMoneyValue(Integer userId,Integer moneyValue);-->
+	<update id="changeMoneyValue">
+		update pt_user_money set money=#{moneyValue} where  user_id=#{userId};
+	</update>
+	<!--
+	/**
+     * 新用户登录创建用户钱包
+     * @param moneyEntity
+     * @return
+     */
+    Integer addMoney(MoneyEntity moneyEntity);-->
+	<insert id="addMoney">
+		insert into pt_user_money (user_id, money, update_by, update_date) values
+		(#{userId}, #{money}, #{updateBy}, #{updateDate})
+	</insert>
+</mapper>

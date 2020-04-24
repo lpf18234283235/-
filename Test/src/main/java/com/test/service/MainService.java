@@ -24,4 +24,6 @@ public interface MainService {
 	MainEntity findMainByOpenId(String openId);
 
 	void changeStatusByMainId(Integer status);
+
+	MainEntity findMainByMainId(Integer mainId);
 }

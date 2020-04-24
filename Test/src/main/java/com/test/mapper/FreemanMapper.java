@@ -47,5 +47,10 @@ public interface FreemanMapper {
 	 */
 	List<FreemanEntity> queryByName(FreemanEntity freemanEntity);
 
-
+	/**
+	 * 修改个人状态
+ 	 * @param userId
+	 * @return
+	 */
+	Integer updateStatus(Integer userId,Integer userStatus);
 }

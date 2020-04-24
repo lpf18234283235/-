@@ -4,20 +4,34 @@
 <!-- namespace:-->
 <mapper namespace="com.test.mapper.OrderMapper">
 	<resultMap type="com.test.entity.OrderEntity" id="OrderEntity">
-		<id column="order_id" property="order_id" />
+		<id column="order_id" property="orderId" />
 		<result column="requir_id" property="requirId" />
+		<result column="order_name" property="orderName" />
 		<result column="user_id_a" property="userIdA" />
+		<result column="a_username" property="aUsername" />
 		<result column="user_id_b" property="userIdB" />
+		<result column="b_username" property="bUsername" />
 		<result column="margin_money" property="marginMoney" />
 		<result column="settle_money" property="settleMoney" />
 		<result column="order_status" property="orderStatus" />
 		<result column="create_by" property="createBy" />
-		<result column="create_time" property="createTime" />
+		<result column="a_create_time" property="aCreateTime" />
+		<result column="b_get_time" property="bGetTime" />
+		<result column="b_finish_time" property="bFinishTime" />
+		<result column="a_confirm_time" property="aConfirmTime" />
 		<result column="remark" property="remark" />
 		<result column="invoice_tag" property="invoiceTag" />
 		<result column="invoice_by" property="invoiceBy" />
 		<result column="invoice_time" property="invoiceTime" />
 		<result column="invoice_info" property="invoiceInfo" />
+		<result column="pay" property="pay" />
+		<result column="pay_time" property="payTime" />
+		<result column="margin_status" property="marginStatus" />
+		<result column="flexible_money" property="flexibleMoney" />
+		<result column="a_evaluate" property="aEvaluate" />
+		<result column="b_evaluate" property="bEvaluate" />
+		<result column="a_evaluate_star" property="aEvaluateStar" />
+		<result column="b_evaluate_star" property="bEvaluateStar" />
 	</resultMap>
 	<!--
 	/**
@@ -28,10 +42,15 @@
      Integer addOrder(OrderEntity orderEntity);
 	-->
 	<insert id="addOrder">
-	insert into  pt_job_order values (requir_id,user_id_a,user_id_b,margin_money,settle_money,order_status,create_by
-	,create_time,remark,invoice_tag,invoice_by,invoice_time,invoice_info)
-	values (#{requirId},#{userIdA},#{userIdB},#{marginMoney},#{settleMoney},#{orderStatus},#{createBy}
-	,#{createTime},#{remark},#{invoiceTag},#{invoiceBy},#{invoiceTime},#{invoiceInfo}
+	insert into  pt_job_order values (requir_id,order_name,user_id_a,a_username,user_id_b,b_username,
+	margin_money,settle_money,order_status,create_by
+	,a_create_time,b_get_time,b_finish_time,a_confirm_time,remark,invoice_tag,invoice_by,invoice_time,
+	invoice_info,flexible_money,a_evaluate,b_evaluate,a_evaluate_star,b_evaluate_star)
+	values (#{requirId},#{orderName},#{userIdA},#{aUsername},
+	#{userIdB},#{bUsername},#{marginMoney},#{settleMoney},#{orderStatus},#{createBy}
+	,#{aCreateTime},#{bGetTime},#{bFinishTime},#{aConfirmTime},
+	#{remark},#{invoiceTag},#{invoiceBy},#{invoiceTime},#{invoiceInfo},
+	#{flexibleMoney},#{aEvaluate},#{bEvaluate},#{aEvaluateStar},#{bEvaluateStar}
 	)
 </insert>
 	<!--
@@ -41,8 +60,8 @@
      * @return
      */
      List<OrderEntity> companyGetListByUserId(Integer userId);-->
-	<select id="companyGetListByUserId">
-		select * from pt_job_order where user_id_a=#{userId} order by create_time desc;
+	<select id="companyGetListByUserId" resultMap="OrderEntity">
+		select * from pt_job_order where user_id_a=#{userId} order by a_create_time desc;
 	</select>
 
 	<!--
@@ -52,7 +71,198 @@
      * @return
      */
      List<OrderEntity> FOTGetListByUserId(Integer userId);-->
-	<select id="FOTGetListByUserId">
-		select * from pt_job_order where user_id_b=#{userId} order by create_time desc;
+	<select id="FOTGetListByUserId" resultMap="OrderEntity" >
+		select * from pt_job_order where user_id_b=#{userId} order by b_get_time desc;
+	</select>
+
+	<!--
+	 /**
+     * 根据发票状态查找订单
+     * @param invoiceTag 发票状态
+     * @return
+     */
+    List<OrderEntity> getListByInvoiceTag(String invoiceTag,Integer userId);-->
+	<select id="getListByInvoiceTag" resultMap="OrderEntity">
+		select * from pt_job_order where user_id_a=#{userId} and invoice_tag=#{invoiceTag} and order_status=4 order by a_confirm_time desc;
+	</select>
+	<!--
+	 /**
+     * 修改发票状态
+     * @param orderId 订单id
+     * @return 是否成功
+     */
+    Integer updateTag(Integer orderId,Integer userIdA);-->
+	<update id="updateTag">
+		update pt_job_order set invoice_tag=1 where order_id=#{orderId} and user_id_a=#{userIdA}
+	</update>
+
+	<!--
+	 /**
+     * 查看创建订单后未支付保证金的订单
+     * @param userIdA 用户id
+     * @return
+     */
+    List<OrderEntity> getByMarginStatus(Integer userIdA);
+	-->
+	<select id="getByMarginStatus0" resultMap="OrderEntity">
+		select * from pt_job_order where user_id_a=#{userIdA} and margin_status=0 order by a_create_time desc;
+	</select>
+
+	<!--
+	 /**
+     * 查看创建订单后已支付保证金的订单
+     * @param userIdB 用户id
+     * @return
+     */
+    List<OrderEntity> getByMarginStatus1(Integer userIdB);-->
+	<select id="getByMarginStatus1" resultMap="OrderEntity">
+		select * from pt_job_order where user_id_a=#{userIdA} and margin_status=1;
+	</select>
+
+	<!--
+	 /**
+     * 甲方查看不同订单状态的订单
+     * @param userIdA 甲方id
+     * @param orderStatus 订单状态
+     * @return
+     */
+    List<OrderEntity> getListByOrderStatusA(Integer userIdA,Integer orderStatus);-->
+	<select id="getListByOrderStatusA" resultMap="OrderEntity">
+		select * from pt_job_order where user_id_a=#{userIdA} and order_status=#{orderStatus} order by a_create_time desc;
+	</select>
+
+	<!--
+	 /**
+     * 甲方查看已评价订单
+     * @return
+     */
+    List<OrderEntity> ListByEvaluateA(Integer userIdA);-->
+	<select id="ListByEvaluateA" resultMap="OrderEntity">
+		select * from pt_job_order where a_evaluate=1 and user_id_a=#{userIdA} and order_status=4 order by b_finish_time desc;
+	</select>
+	<!--
+	 /**
+     * 乙方查看已评价订单
+     * @return
+     */
+    List<OrderEntity> ListByEvaluateB(Integer userIdB);-->
+	<select id="ListByEvaluateB" resultMap="OrderEntity">
+		select * from pt_job_order where b_evaluate=1 and user_id_b=#{userIdB} and order_status=4 order by b_finish_time desc;
+	</select>
+	<!-- /**
+     * 乙方查看不同订单状态的订单
+     * @param userIdB 乙方id
+     * @param orderStatus 订单状态
+     * @return
+     */
+    List<OrderEntity> getListByOrderStatusB(Integer userIdB,Integer orderStatus);-->
+	<select id="getListByOrderStatusB" resultMap="OrderEntity">
+		select * from pt_job_order where user_id_B=#{userIdB} and order_status=#{orderStatus} order by a_create_time desc ;
+	</select>
+
+	<!--
+	/**
+     *修改订单状态和灵活支付金额
+     * @param orderId  订单id
+     * @param orderStatus 订单状态
+     * @return
+     */
+    Integer updateOrderStatus5(Integer flexibleMoney,Integer orderId,Integer userIdA);-->
+	<update id="updateOrderStatus5">
+		update pt_job_order set order_status=5 , flexible_money=#{flexibleMoney} where order_id=#{orderId} and user_id_a=#{userIdA};
+	</update>
+
+	<!--
+	 /**
+     * 甲方修改订单状态为已完工
+     * @param orderId 订单id
+     * @return
+     */
+    Integer updateOrderStatus4(Integer orderId,Integer userIdA);-->
+	<update id="updateOrderStatus4">
+		update pt_job_order set order_status=4,a_confirm_time=now() where order_id=#{orderId} and user_id_a=#{userIdA};
+	</update>
+	<!--
+	/**
+     * 乙方修改订单状态为已接单
+     * @param orderId 订单id
+     * @return
+     */
+    Integer updateOrderStatus1(Integer orderId,Integer userIdB);-->
+	<update id="updateOrderStatus1">
+		update pt_job_order set order_status=1,b_get_time=now() where order_id=#{orderId} and user_id_b=#{userIdB};
+	</update>
+	<!--/**
+     * 乙方修改订单状态为拒绝接单
+     * @param orderId 订单id
+     * @return
+     */
+    Integer updateOrderStatus2(Integer orderId,Integer userIdB);-->
+	<update id="updateOrderStatus2">
+		update pt_job_order set order_status=2 where order_id=#{orderId} and user_id_b=#{userIdB};
+	</update>
+	<!-- /**
+     * 乙方修改订单状态为接单完工状态
+     * @param orderId 订单id
+     * @return
+     */
+    Integer updateOrderStatus3(Integer orderId,Integer userIdB);-->
+	<update id="updateOrderStatus3">
+		update pt_job_order set order_status=3,b_finish_time=now() where order_id=#{orderId} and user_id_b=#{userIdB};
+	</update>
+	<!--
+	/**
+     * 乙方确认甲方发起的灵活支付状态
+     * @param orderId 订单id
+     * @return
+     */
+    Integer updateOrderStatus7(Integer orderId,Integer userIdB);-->
+	<update id="updateOrderStatus7">
+		update pt_job_order set order_status=7 where order_id=#{orderId} and user_id_b=#{userIdB};
+	</update>
+	<!--
+	/**
+     * 甲方评论乙方
+     * @param star
+     * @param orderId
+     */
+    void changeAEvaluate(Integer star, Integer orderId);-->
+	<update id="changeAEvaluate1">
+		update pt_job_order set a_evaluate_star=#{star},a_evaluate=1 where order_id=#{orderId}
+	</update>
+
+	<!-- /**
+     * 乙方评论甲方
+     * @param star
+     * @param orderId
+     */
+    void changeBEvaluate(Integer star, Integer orderId);
+	-->
+	<update id="changeBEvaluate">
+		update pt_job_order set b_evaluate_star=#{star},b_evaluate=1 where order_id=#{orderId}
+	</update>
+
+	<!--
+	/**
+     * 查看已完成且已支付给乙方的订单
+     * @param userIdA
+     * @return
+     */
+    List<OrderEntity> listByPayToB(Integer userIdA);-->
+	<select id="listByPayToB" resultMap="OrderEntity">
+		select * from pt_job_order where order_status=4 and pay=1 and user_id_a=#{userIdA} order by pay_time desc ;
+	</select>
+	<!--
+	/**
+     * 查询已支付保证金的总额
+     * @param userIdA
+     * @return
+     */
+    Integer getSumMargin(Integer userIdA);-->
+	<select id="getSumMargin" resultType="java.lang.Integer">
+	SELECT sum(margin_money)
+	 from pt_job_order
+	where user_id_a=#{userIdA}
+	and margin_status=1 ;
 	</select>
 </mapper>

@@ -15,6 +15,7 @@
 		<result column="introduce" property="introduce" />
 		<result column="license" property="license" />
 		<result column="address_code" property="addressCode" />
+
 	</resultMap>
 	<!--  /**
 	 * @param id
@@ -72,7 +73,7 @@
 	Integer updateCompany(CompanyEntity companyEntity);
 -->
 	<insert id="updateCompany">
-	INSERT INTO copy_user_company (
+	INSERT INTO copy_pt_user_company (
 	user_id,team_name,name,sex,phone,email,user_image,address,introduce,license,address_code)
 	VALUES(#{userId},
 	#{teamName},#{name},#{sex},#{phone},#{email},#{userImage},#{address},#{introduce},#{license},#{addressCode}

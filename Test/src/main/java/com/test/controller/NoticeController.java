@@ -32,7 +32,7 @@ public class NoticeController extends BaseController {
     @ApiOperation(value = "获取用户通知", notes = "获取所有通知")
     @PostMapping("/byUserId/{userId}")
     @ApiImplicitParam(value = "用户openid")
-    public JsonResult<Void> getList(@PathVariable("userId") String openId) {
+    public JsonResult<List<NoticeEntity>> getList(@PathVariable("userId") String openId) {
         List<NoticeEntity> data = noticeService.getById(openId);
         return new JsonResult(SUCCESS, data);
     }
@@ -50,6 +50,6 @@ public class NoticeController extends BaseController {
     @ApiImplicitParams({@ApiImplicitParam("), @ApiImplicitParam(")})
     public JsonResult<Void> addNotice(NoticeEntity noticeEntity, String openId) {
         this.noticeService.insert(noticeEntity, openId);
-        return new JsonResult(Integer.valueOf(0));
+        return new JsonResult(SUCCESS);
     }
 }

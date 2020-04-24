@@ -27,16 +27,20 @@ public class MainController extends BaseController {
 
     @GetMapping("login")
     @ApiImplicitParams(
-            {@ApiImplicitParam("username,"),
+            {@ApiImplicitParam("username"),
                     @ApiImplicitParam("phone"),
                     @ApiImplicitParam("openId")})
     @ApiOperation(value = "用户登录接口", notes = "用户登录接口")
     public JsonResult login(String username, String phone, String openId) {
         MainEntity mainEntity = new MainEntity();
+        System.err.println(username);
+        System.err.println(phone);
+        System.err.println(openId);
         mainEntity.setUserName(username);
         mainEntity.setPhone(phone);
         mainEntity.setOpenId(openId);
-        this.mainService.login(mainEntity);
+        System.err.println(mainEntity);
+        mainService.login(mainEntity);
         return new JsonResult(SUCCESS);
     }
 

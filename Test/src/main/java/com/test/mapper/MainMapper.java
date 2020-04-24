@@ -29,4 +29,11 @@ public interface MainMapper {
     MainEntity getMainByOpenId(String openId);
 
     Integer updateStataus(Integer mainId);
+
+    /**
+     * 通过id查找用户
+     * @param mainId
+     * @return
+     */
+    MainEntity getMainByMainId(Integer mainId);
 }
